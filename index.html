@@ -5,12 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Blast Belt Versus</title>
 <meta name="theme-color" content="#000000">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="Blast Belt Versus">
-<link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -308,20 +302,19 @@
   #countdown-overlay {
     position: absolute; inset: 0; z-index: 100;
     display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
+    align-items: center; justify-content: space-evenly;
     background: rgba(0,0,0,0.92);
     pointer-events: none;
-    padding: 5% 5% 5% 5%;
+    padding: 4% 5%;
     overflow: hidden;
   }
   #countdown-overlay.hidden { display: none; }
   .cd-title {
     font-family: 'Orbitron', sans-serif;
-    font-size: clamp(18px, 5vw, 32px);
+    font-size: clamp(26px, 7vw, 48px);
     font-weight: 700;
     color: #fff;
-    letter-spacing: 2px;
-    margin-bottom: 12px;
+    letter-spacing: 4px;
     text-align: center;
     flex-shrink: 0;
     word-wrap: break-word;
@@ -330,37 +323,36 @@
   }
   .cd-fighters {
     display: flex; flex-direction: column;
-    gap: 10px;
-    width: 100%; max-width: 400px;
+    gap: 18px;
+    width: 100%; max-width: 500px;
     flex-shrink: 1;
     justify-content: center;
-    overflow: hidden;
+    overflow: visible;
   }
   .cd-fighter-row {
-    display: flex; align-items: center; gap: 10px;
-    padding: 6px 0;
+    display: flex; align-items: center; gap: 14px;
+    padding: 8px 0;
     animation: cdSlideIn 0.4s ease-out backwards;
   }
   @keyframes cdSlideIn {
     from { opacity: 0; transform: translateX(-20px); }
     to { opacity: 1; transform: translateX(0); }
   }
-  .cd-fighter-row .ship-icon { width: 32px; height: 32px; flex-shrink: 0; }
+  .cd-fighter-row .ship-icon { width: 44px; height: 44px; flex-shrink: 0; }
   .cd-fighter-info {
-    display: flex; flex-direction: column; gap: 1px;
+    display: flex; flex-direction: column; gap: 2px;
   }
   .cd-fighter-name {
-    font-size: clamp(12px, 3vw, 16px);
-    letter-spacing: 2px;
+    font-size: clamp(16px, 4vw, 22px);
+    letter-spacing: 3px;
     font-weight: 700;
   }
   .cd-fighter-loadout {
-    font-size: clamp(8px, 2vw, 11px);
+    font-size: clamp(10px, 2.5vw, 14px);
     color: rgba(255,255,255,0.4);
     letter-spacing: 1px;
   }
   .cd-bottom {
-    margin-top: 12px;
     flex-shrink: 0;
     text-align: center;
   }
@@ -369,49 +361,44 @@
     font-size: clamp(14px, 3.5vw, 22px);
     font-weight: 700;
     color: rgba(255,255,255,0.6);
-    letter-spacing: 3px;
+    letter-spacing: 5px;
     animation: pulse 1s ease-in-out infinite;
   }
   @keyframes pulse { 0%,100% { opacity:0.5; } 50% { opacity:1; } }
 
   /* ── MATCH HUD ── */
-  #match-hud { display: none !important; }
-  .hud-team {
-    position: absolute; left: 0; right: 0;
-    display: flex; gap: 4px; padding: 6px 8px;
-    justify-content: center;
+  #match-hud { display: none; }
+  #match-hud.active { display: block; }
+  #team-banner {
+    position: absolute; top: 0; left: 0; right: 0;
+    display: flex; justify-content: center; gap: 0;
+    padding: 6px 10px 8px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, transparent 100%);
+    pointer-events: none; z-index: 10;
   }
-  .hud-team.top { top: 0; }
-  .hud-team.bottom { bottom: 0; }
-  .hud-ship {
-    display: flex; align-items: center; gap: 4px;
-    padding: 3px 8px;
-    background: rgba(0,0,0,0.6);
-    border-radius: 3px;
-    border: 1px solid;
-    transition: opacity 0.3s;
+  .tb-team {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 0 12px; min-width: 60px;
   }
-  .hud-ship.dead { opacity: 0.25; }
-  .hud-ship .ship-icon { width: 16px; height: 16px; }
-  .hud-ship .hs-name {
-    font-size: clamp(8px, 1.8vw, 10px);
-    letter-spacing: 2px;
+  .tb-vs {
+    display: flex; align-items: center; padding: 0 6px;
+    font-family: 'Orbitron', sans-serif; font-size: clamp(8px,1.8vw,13px);
+    font-weight: 900; color: rgba(255,255,255,0.25); letter-spacing: 3px;
+    align-self: center;
   }
-  .hud-ship .hs-hp-bar {
-    width: 40px; height: 4px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 2px;
-    overflow: hidden;
+  .tb-name {
+    font-family: 'Orbitron', sans-serif; font-size: clamp(8px, 2vw, 13px);
+    font-weight: 700; letter-spacing: 3px; white-space: nowrap;
   }
-  .hud-ship .hs-hp-fill {
-    height: 100%;
-    border-radius: 2px;
-    transition: width 0.15s;
+  .tb-ships {
+    display: flex; gap: 3px; margin-top: 3px; justify-content: center; flex-wrap: wrap;
   }
-  .hud-ship .hs-kills {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 9px;
-    font-weight: 700;
+  .tb-ship {
+    transition: opacity 0.5s;
+  }
+  .tb-ship.dead {
+    opacity: 0.2;
+    filter: grayscale(1);
   }
 
   #killfeed { display: none; }
@@ -544,19 +531,19 @@
 
   <!-- COUNTDOWN -->
   <div id="countdown-overlay" class="hidden">
-    <div id="cd-choose" style="font-family:'Orbitron',sans-serif; font-size:clamp(10px,2.5vw,16px); color:rgba(255,255,255,0.35); letter-spacing:6px; margin-bottom:4px; display:none;">CHOOSE YOUR TEAM!</div>
+    <div id="cd-choose" style="font-family:'Orbitron',sans-serif; font-size:clamp(22px,5.5vw,38px); color:rgba(255,255,255,0.9); letter-spacing:10px; text-shadow:0 0 20px rgba(255,255,255,0.4), 0 2px 10px rgba(0,0,0,0.9); margin-bottom:6px; display:none;">CHOOSE YOUR TEAM!</div>
     <div class="cd-title" id="cd-title">Choose Your Fighter!</div>
     <div class="cd-fighters" id="cd-fighters"></div>
     <div class="cd-bottom">
+      <div id="cd-bets" style="font-family:'Orbitron',sans-serif; font-size:clamp(22px,5.5vw,38px); color:rgba(255,255,255,0.9); letter-spacing:10px; text-shadow:0 0 20px rgba(255,255,255,0.4), 0 2px 10px rgba(0,0,0,0.9); margin-top:8px; display:none;">PLACE YOUR BETS!</div>
       <div id="cd-timer">Battle Royale begins in: 3...</div>
-      <div id="cd-bets" style="font-family:'Orbitron',sans-serif; font-size:clamp(10px,2.5vw,16px); color:rgba(255,255,255,0.35); letter-spacing:6px; margin-top:6px; display:none;">PLACE YOUR BETS!</div>
     </div>
+    <div id="cd-big-number" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-family:'Orbitron',sans-serif; font-size:clamp(80px,20vw,180px); font-weight:900; color:#fff; text-shadow:0 0 60px rgba(255,255,255,0.6), 0 0 120px rgba(255,255,255,0.3); letter-spacing:8px; pointer-events:none;"></div>
   </div>
 
   <!-- MATCH HUD -->
   <div id="match-hud">
-    <div class="hud-team top" id="hud-team1"></div>
-    <div class="hud-team bottom" id="hud-team2"></div>
+    <div id="team-banner"></div>
   </div>
   <div id="killfeed"></div>
   <div id="match-timer"></div>
@@ -703,8 +690,8 @@ const SHIP_SHAPES = [
 
 const CHEVRON_ID = 9; // White's classic chevron shape
 
-function createShipIcon(shipId, color, size) {
-  const effectiveId = setupSettings.uniqueShips ? shipId : CHEVRON_ID;
+function createShipIcon(shipId, color, size, forceDesign) {
+  const effectiveId = forceDesign ? shipId : (setupSettings.uniqueShips ? shipId : CHEVRON_ID);
   const dpr = window.devicePixelRatio || 1;
   const c = document.createElement('canvas');
   c.width = size * dpr;
@@ -846,7 +833,7 @@ const PASSIVE_DEFS = {
   titanium:    { name: 'Titanium',     desc: '-25% incoming damage' },
   stealth:     { name: 'Stealth',      desc: 'Perceived as 1.5x distance' },
   sparkDrive:  { name: 'Spark Drive',  desc: '+20% projectile speed' },
-  drillbore:   { name: 'Drillbore',    desc: 'Survives collisions (10% chip dmg)' },
+  drillbore:   { name: 'Drillbore',    desc: 'Survives collisions (5% chip dmg)' },
   iceRounds:   { name: 'Ice Rounds',   desc: 'Slows + 0.25 HP DoT' },
   jamRounds:   { name: 'Jam Rounds',   desc: 'Jams hit targets\' fire rate' },
   incendiary:  { name: 'Incendiary',   desc: '50% damage as burn DoT, trail dmg' },
@@ -1170,7 +1157,7 @@ function startManeuver(ship) {
       const orbitStart = (ci / 4) * Math.PI * 2; // 0, π/2, π, 3π/2
       shipClones.push({
         ownerId: ship.id,
-        shipId: ship.typeId,
+        shipId: ship.designId != null ? ship.designId : ship.typeId,
         x: ship.x, y: ship.y,
         ang: ship.ang,
         r: ship.r,
@@ -1241,8 +1228,8 @@ function startManeuver(ship) {
   if (ship.maneuver === 'shockPulse') {
     // Massive stun pulse — 2x repulsor radius
     const pulseRadius = 700;
-    shockwaves.push({ x: ship.x, y: ship.y, r: 0, maxR: pulseRadius, life: 0.6, maxLife: 0.6, color: '#ffff44' });
-    spawnExplosion(ship.x, ship.y, '#ffff44', 20, 120);
+    shockwaves.push({ x: ship.x, y: ship.y, r: 0, maxR: pulseRadius, life: 0.6, maxLife: 0.6, color: ship.color });
+    spawnExplosion(ship.x, ship.y, ship.color, 20, 120);
     playShootRise();
     // Stun all enemy ships in range
     let stunHit = false;
@@ -1251,6 +1238,7 @@ function startManeuver(ship) {
       if (ship.team > 0 && target.team === ship.team) continue;
       if (dist(ship, target) < pulseRadius) {
         target.stunTimer = 1.75;
+        target.stunColor = ship.color;
         stunHit = true;
         // Stun arc sparks on affected ship
         for (let sp = 0; sp < 4; sp++) {
@@ -1270,7 +1258,7 @@ function startManeuver(ship) {
             y: target.y + rand(-target.r, target.r),
             vx: Math.cos(a) * rand(40, 80), vy: Math.sin(a) * rand(40, 80),
             life: rand(0.15, 0.3), maxLife: 0.3,
-            color: '#ffff44', size: 1.5,
+            color: ship.color, size: 1.5,
             isArc: true, arcPoints: ap,
           });
         }
@@ -2074,6 +2062,7 @@ let teams = [[], []]; // array of arrays of ship indices
 let teamWeapons = [[], []]; // per-team weapon key selections (empty = use global settings)
 let teamPassives = [[], []]; // per-team passive key selections
 let teamManeuvers = [[], []]; // per-team maneuver key selections
+let teamShipDesigns = [[], []]; // per-team ship design indices
 let selectedShips = []; // array of ship indices (FFA mode)
 let assignTarget = 0; // which team index gets next click in team mode
 let teamNames = ['TEAM 1', 'TEAM 2'];
@@ -2101,6 +2090,7 @@ function setMode(mode) {
     teamWeapons = [[], []];
     teamPassives = [[], []];
     teamManeuvers = [[], []];
+    teamShipDesigns = [[], []];
   } else {
     teamsArea.classList.remove('hidden');
     label.textContent = 'TAP TO ADD FIGHTERS';
@@ -2149,6 +2139,7 @@ function addTeam() {
   teamWeapons.push([]);
   teamPassives.push([]);
   teamManeuvers.push([]);
+  teamShipDesigns.push([]);
   assignTarget = teams.length - 1;
   renderSetup();
 }
@@ -2160,7 +2151,7 @@ function removeTeam(t) {
   teamWeapons.splice(t, 1);
   teamPassives.splice(t, 1);
   teamManeuvers.splice(t, 1);
-  if (assignTarget >= teams.length) assignTarget = teams.length - 1;
+  teamShipDesigns.splice(t, 1); assignTarget = teams.length - 1;
   renderSetup();
 }
 
@@ -2197,9 +2188,10 @@ function toggleLoadoutDropdown(teamIdx, btn, type) {
   dd.className = 'team-wpn-dropdown';
   dd._ddKey = ddKey;
 
-  let keys, defs, stateArr;
+  let keys, defs, stateArr, isIdx = false;
   if (type === 'weapons') { keys = Object.keys(WEAPON_DEFS); defs = WEAPON_DEFS; stateArr = teamWeapons; }
   else if (type === 'passives') { keys = PASSIVE_KEYS; defs = PASSIVE_DEFS; stateArr = teamPassives; }
+  else if (type === 'ships') { keys = PILOT_NAMES.map((_, i) => i); defs = null; stateArr = teamShipDesigns; isIdx = true; }
   else { keys = MANEUVER_KEYS; defs = MANEUVER_DEFS; stateArr = teamManeuvers; }
 
   for (const key of keys) {
@@ -2214,19 +2206,27 @@ function toggleLoadoutDropdown(teamIdx, btn, type) {
       } else {
         stateArr[teamIdx] = stateArr[teamIdx].filter(k => k !== key);
       }
-      // Update button label without re-rendering
       const btns = document.querySelectorAll(`.team-wpn-btn[data-type="${type}"]`);
       const btn = btns[teamIdx];
       if (btn) {
         const count = stateArr[teamIdx].length;
-        const icon = type === 'weapons' ? '⚔' : type === 'passives' ? '◈' : '↻';
-        btn.textContent = count === 0 ? icon : count === 1 ? defs[stateArr[teamIdx][0]]?.name || stateArr[teamIdx][0] : `${icon}${count}`;
+        const icon = type === 'weapons' ? '⚔' : type === 'passives' ? '◈' : type === 'ships' ? '▲' : '↻';
+        if (isIdx) {
+          btn.textContent = count === 0 ? icon : count === 1 ? PILOT_NAMES[stateArr[teamIdx][0]] : `${icon}${count}`;
+        } else {
+          btn.textContent = count === 0 ? icon : count === 1 ? defs[stateArr[teamIdx][0]]?.name || stateArr[teamIdx][0] : `${icon}${count}`;
+        }
         btn.classList.toggle('active', count > 0);
       }
     };
     item.appendChild(cb);
+    if (isIdx) {
+      const ic = createShipIcon(key, PILOT_COLORS[key], 16);
+      ic.style.flexShrink = '0';
+      item.appendChild(ic);
+    }
     const label = document.createElement('span');
-    label.textContent = defs[key].name;
+    label.textContent = isIdx ? PILOT_NAMES[key] : defs[key].name;
     item.appendChild(label);
     dd.appendChild(item);
   }
@@ -2271,9 +2271,10 @@ function renderSetup() {
       const loadoutRow = document.createElement('div');
       loadoutRow.style.cssText = 'display:flex; gap:2px; margin-bottom:2px;';
       const loadoutTypes = [
-        { type: 'weapons', arr: teamWeapons, defs: WEAPON_DEFS, icon: '⚔' },
-        { type: 'passives', arr: teamPassives, defs: PASSIVE_DEFS, icon: '◈' },
-        { type: 'maneuvers', arr: teamManeuvers, defs: MANEUVER_DEFS, icon: '↻' },
+        { type: 'weapons', arr: teamWeapons, defs: WEAPON_DEFS, icon: '⚔', isIdx: false },
+        { type: 'passives', arr: teamPassives, defs: PASSIVE_DEFS, icon: '◈', isIdx: false },
+        { type: 'maneuvers', arr: teamManeuvers, defs: MANEUVER_DEFS, icon: '↻', isIdx: false },
+        { type: 'ships', arr: teamShipDesigns, defs: null, icon: '▲', isIdx: true },
       ];
       for (const lt of loadoutTypes) {
         const btn = document.createElement('div');
@@ -2281,7 +2282,11 @@ function renderSetup() {
         btn.setAttribute('data-type', lt.type);
         btn.title = lt.type.charAt(0).toUpperCase() + lt.type.slice(1);
         const count = lt.arr[t].length;
-        btn.textContent = count === 0 ? `${lt.icon}` : count === 1 ? lt.defs[lt.arr[t][0]]?.name || lt.arr[t][0] : `${lt.icon}${count}`;
+        if (lt.isIdx) {
+          btn.textContent = count === 0 ? lt.icon : count === 1 ? PILOT_NAMES[lt.arr[t][0]] : `${lt.icon}${count}`;
+        } else {
+          btn.textContent = count === 0 ? lt.icon : count === 1 ? lt.defs[lt.arr[t][0]]?.name || lt.arr[t][0] : `${lt.icon}${count}`;
+        }
         btn.style.flex = '1';
         const _type = lt.type, _t = t;
         btn.onclick = (e) => { e.stopPropagation(); toggleLoadoutDropdown(_t, btn, _type); };
@@ -2787,8 +2792,7 @@ function drawShipShape(ctx, x, y, ang, r, color, hp, maxHp, invuln, shipId, hpBa
   ctx.shadowColor = color;
   ctx.shadowBlur = 20;
 
-  const effectiveId = setupSettings.uniqueShips ? shipId : CHEVRON_ID;
-  const verts = (effectiveId != null && SHIP_SHAPES[effectiveId]) ? SHIP_SHAPES[effectiveId] : SHIP_SHAPES[CHEVRON_ID]; // fallback to chevron
+  const verts = (shipId != null && SHIP_SHAPES[shipId]) ? SHIP_SHAPES[shipId] : SHIP_SHAPES[CHEVRON_ID];
 
   ctx.strokeStyle = color;
   ctx.lineWidth = 2.5;
@@ -2927,21 +2931,19 @@ const container = document.getElementById('game-container');
 
 let W, H;
 let ships = [];
-let _origTeamSizes = [];
-let _teamCoreColors = [];
-
-function lerpHexColor(c1, c2, t) {
-  const r1 = parseInt(c1.slice(1,3),16), g1 = parseInt(c1.slice(3,5),16), b1 = parseInt(c1.slice(5,7),16);
-  const r2 = parseInt(c2.slice(1,3),16), g2 = parseInt(c2.slice(3,5),16), b2 = parseInt(c2.slice(5,7),16);
-  const r = Math.round(r1 + (r2 - r1) * t), g = Math.round(g1 + (g2 - g1) * t), b = Math.round(b1 + (b2 - b1) * t);
-  return '#' + ((1<<24)|(r<<16)|(g<<8)|b).toString(16).slice(1);
-}
 let shipById = {};
 let teamPalettes = {};
 
 function trailColor(ship) {
   const p = teamPalettes[ship.team];
   return (p && p.length > 1) ? p[randInt(0, p.length - 1)] : ship.color;
+}
+
+// Friendly fire damage multiplier: 0 for first 5s, ramps 0→1 over 5-12s
+function getFriendlyDamageMult() {
+  if (gameTime < 5) return 0;
+  if (gameTime >= 12) return 1;
+  return (gameTime - 5) / 7;
 }
 
 function getTeamColors() {
@@ -2990,6 +2992,11 @@ let pregame = true;
 let countdown = false;
 let countdownTimer = 0;
 const COUNTDOWN_DURATION = 3;
+let flyInPhase = false;
+let flyInElapsed = 0;
+let flyInDuration = 1.2;
+let flyInStagger = 1.0;
+let flyInTeamLabels = [];
 let winner = null;
 let simSpeed = 1;
 let finaleMode = false;
@@ -3056,6 +3063,7 @@ function init() {
   smokeDecoys = [];
   shipClones = [];
   debrisField = [];
+  _bannerBuilt = false;
   reflectorShields = [];
   mines = [];
   shipDrones = [];
@@ -3179,12 +3187,6 @@ function init() {
 
   // Prevent early teamkills: for each team, only the ship closest to center can fire immediately
   if (!isFFA) {
-    // Store original team sizes for color transition
-    _origTeamSizes = [];
-    for (let t = 1; t <= teams.length; t++) {
-      _origTeamSizes[t] = ships.filter(s => s.team === t).length;
-    }
-    _teamCoreColors = getTeamColors();
     for (let t = 1; t <= teams.length; t++) {
       const teamShips = ships.filter(s => s.team === t);
       if (teamShips.length <= 1) continue;
@@ -3201,12 +3203,20 @@ function init() {
 
   function makeShipObj(i, sp, faceAng, teamNum) {
     const _usePresets = setupSettings.weapons && setupSettings.passives && setupSettings.maneuvers && setupSettings.uniqueShips && !settings.randomPersonalities;
+    // Determine ship visual design
+    let designId;
+    const tsd = teamNum > 0 ? teamShipDesigns[teamNum - 1] : null;
+    if (tsd && tsd.length > 0) {
+      designId = tsd[randInt(0, tsd.length - 1)];
+    } else {
+      designId = setupSettings.uniqueShips ? i : CHEVRON_ID;
+    }
     return {
       id: _nextShipUid++,
       typeId: i,
+      designId: designId,
       name: PILOT_NAMES[i],
       color: PILOT_COLORS[i],
-      origColor: PILOT_COLORS[i],
       x: sp.x, y: sp.y,
       vx: 0, vy: 0,
       ang: faceAng,
@@ -3266,6 +3276,7 @@ function init() {
       _bioRegenTimer: 0,
       blindTimer: 0,
       burnTimer: 0, burnDps: 0, iceDotTimer: 0,
+      burnColor: null, iceColor: null, jamColor: null, stunColor: null, overrideColor: null, blindColor: null,
       _bulletThreat: false,
       _emergencyEvade: false,
       team: teamNum,
@@ -3374,32 +3385,55 @@ function spawnThrustParticle(ship) {
   const lifeMult = (ship.passive === 'nitro' ? 2.0 : 1.0) * (ship.team > 0 ? 3.0 : 1.0);
 
   if (ship.passive === 'stealth') {
-    // Beam trail: store position for line drawing instead of particles
     if (!ship.beamTrail) ship.beamTrail = [];
     ship.beamTrail.push({ x: bx, y: by, life: 0.25 * lifeMult, maxLife: 0.25 * lifeMult });
     return;
   }
 
   // Determine exhaust angles: center for normal, center + ±30° for gyro
-  const angles = [ship.ang + Math.PI]; // default: straight back
+  const angles = [ship.ang + Math.PI];
   if (ship.passive === 'gyro') {
-    angles.push(ship.ang + Math.PI + 0.524); // +30°
-    angles.push(ship.ang + Math.PI - 0.524); // -30°
+    angles.push(ship.ang + Math.PI + 0.524);
+    angles.push(ship.ang + Math.PI - 0.524);
   }
 
+  const isBio = ship.passive === 'bioHull';
+  const palette = (ship.team > 0) ? teamPalettes[ship.team] : null;
+  const multiTrail = palette && palette.length > 1;
+
   for (const exAng of angles) {
-    const isBio = ship.passive === 'bioHull';
-    particles.push({
-      x: bx + rand(-3, 3),
-      y: by + rand(-3, 3),
-      vx: Math.cos(exAng) * rand(30, 80) + ship.vx * 0.3,
-      vy: Math.sin(exAng) * rand(30, 80) + ship.vy * 0.3,
-      life: rand(0.1, 0.3) * lifeMult,
-      maxLife: 0.3 * lifeMult,
-      color: isBio ? '#44ff44' : trailColor(ship),
-      size: rand(1, 2.5),
-      isPlus: isBio,
-    });
+    if (multiTrail && !isBio) {
+      // Separate offset trails per team color
+      const perpAng = ship.ang + Math.PI / 2;
+      const nColors = palette.length;
+      const totalSpread = Math.min(8, 3 + nColors * 1.5); // total pixel width
+      for (let ci = 0; ci < nColors; ci++) {
+        const offset = nColors === 1 ? 0 : (ci / (nColors - 1) - 0.5) * totalSpread;
+        const ox = bx + Math.cos(perpAng) * offset + rand(-1, 1);
+        const oy = by + Math.sin(perpAng) * offset + rand(-1, 1);
+        particles.push({
+          x: ox, y: oy,
+          vx: Math.cos(exAng) * rand(30, 80) + ship.vx * 0.3,
+          vy: Math.sin(exAng) * rand(30, 80) + ship.vy * 0.3,
+          life: rand(0.1, 0.3) * lifeMult,
+          maxLife: 0.3 * lifeMult,
+          color: palette[ci],
+          size: rand(1, 2.5),
+        });
+      }
+    } else {
+      particles.push({
+        x: bx + rand(-3, 3),
+        y: by + rand(-3, 3),
+        vx: Math.cos(exAng) * rand(30, 80) + ship.vx * 0.3,
+        vy: Math.sin(exAng) * rand(30, 80) + ship.vy * 0.3,
+        life: rand(0.1, 0.3) * lifeMult,
+        maxLife: 0.3 * lifeMult,
+        color: isBio ? '#44ff44' : trailColor(ship),
+        size: rand(1, 2.5),
+        isPlus: isBio,
+      });
+    }
   }
 }
 
@@ -3815,21 +3849,150 @@ function update(rawDt) {
 
   if (countdown) {
     countdownTimer -= rawDt;
-    const secs = Math.ceil(Math.max(0, countdownTimer));
-    const timerEl = document.getElementById('cd-timer');
-    if (secs > 0) {
-      const modeLabel = matchMode === 'ffa' ? 'Battle Royale' : 'Team Battle';
-      timerEl.textContent = `${modeLabel} begins in: ${secs}...`;
-    } else {
-      timerEl.textContent = 'FIGHT!';
+
+    // Fly-in animation for team modes
+    if (flyInPhase) {
+      flyInElapsed += rawDt;
+      const numTeams = teams.length;
+      let allArrived = true;
+
+      for (const ship of ships) {
+        if (ship._flyTeamIdx == null) continue;
+        const teamStart = ship._flyTeamIdx * flyInStagger;
+        const progress = Math.max(0, Math.min(1, (flyInElapsed - teamStart) / flyInDuration));
+        const t = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+        ship.x = ship._flyStartX + (ship._flyTargetX - ship._flyStartX) * t;
+        ship.y = ship._flyStartY + (ship._flyTargetY - ship._flyStartY) * t;
+        ship._flyAlpha = progress > 0 ? Math.min(1, progress * 2) : 0; // fade in over first half
+        if (progress > 0 && progress < 1) {
+          ship.ang = Math.atan2(ship._flyTargetY - ship._flyStartY, ship._flyTargetX - ship._flyStartX);
+          if (Math.random() < 0.5) spawnThrustParticle(ship);
+        }
+        if (progress >= 1) {
+          const _cx = CFG.WORLD_W / 2, _cy = CFG.WORLD_H / 2;
+          ship.ang = Math.atan2(_cy - ship.y, _cx - ship.x);
+          ship._flyAlpha = 1;
+        }
+        if (progress < 1) allArrived = false;
+      }
+
+      // Update team labels
+      for (let ti = 0; ti < flyInTeamLabels.length; ti++) {
+        const label = flyInTeamLabels[ti];
+        const teamStart = ti * flyInStagger;
+        const progress = Math.max(0, Math.min(1, (flyInElapsed - teamStart) / flyInDuration));
+        if (progress >= 0.8 && !label.arrived) label.arrived = true;
+        if (label.arrived) label.alpha = Math.min(1, label.alpha + rawDt * 3);
+      }
+
+      // End fly-in
+      const flyInEnd = (numTeams - 1) * flyInStagger + flyInDuration + 0.5;
+      if (flyInElapsed >= flyInEnd) {
+        flyInPhase = false;
+        for (const ship of ships) {
+          if (ship._flyTargetX != null) { ship.x = ship._flyTargetX; ship.y = ship._flyTargetY; }
+          delete ship._flyAlpha;
+        }
+        // Keep team labels on screen — they'll fade during countdown
+        _camTargetSmX = cameraX; _camTargetSmY = cameraY; _camTargetSmZ = camZoom;
+        // Show big countdown number (stay on transparent overlay)
+        document.getElementById('cd-big-number').style.display = 'block';
+      }
+
+      // Update particles during fly-in
+      const pdt = rawDt * 0.5;
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx * pdt; p.y += p.vy * pdt;
+        p.vx *= (1 - 3 * pdt); p.vy *= (1 - 3 * pdt);
+        p.life -= pdt;
+        if (p.life <= 0) particles.splice(i, 1);
+      }
     }
-    // Camera stays framed on ships during countdown
-    if (!finaleMode) updateCamera(0, rawDt);
+
+    // Timer display
+    const timerEl = document.getElementById('cd-timer');
+    const bigNum = document.getElementById('cd-big-number');
+    if (flyInPhase) {
+      timerEl.textContent = '';
+      if (bigNum) bigNum.style.display = 'none';
+    } else if (matchMode === 'teams') {
+      // Big center number for teams
+      timerEl.style.display = 'none';
+      const secs = Math.ceil(Math.max(0, countdownTimer));
+      if (secs > 0) {
+        bigNum.textContent = secs;
+        bigNum.style.display = 'block';
+      } else {
+        bigNum.textContent = 'GO!';
+        bigNum.style.display = 'block';
+      }
+      // Fade out team labels during last second
+      if (countdownTimer <= 1 && flyInTeamLabels.length > 0) {
+        const fadeT = Math.max(0, countdownTimer); // 1→0
+        for (const label of flyInTeamLabels) label.alpha = fadeT;
+        if (fadeT <= 0) flyInTeamLabels = [];
+      }
+    } else {
+      const secs = Math.ceil(Math.max(0, countdownTimer));
+      if (secs > 0) {
+        const modeLabel = matchMode === 'ffa' ? 'Battle Royale' : 'Team Battle';
+        timerEl.textContent = `${modeLabel} begins in: ${secs}...`;
+      } else {
+        timerEl.textContent = 'FIGHT!';
+      }
+    }
+
+    // Camera — subtle: stay mostly centered, smooth drift toward arriving team
+    if (flyInPhase) {
+      const cx = CFG.WORLD_W / 2, cy = CFG.WORLD_H / 2;
+      // Blend smoothly between team positions based on elapsed time
+      let shiftX = 0, shiftY = 0;
+      for (let ti = 0; ti < flyInTeamLabels.length; ti++) {
+        const label = flyInTeamLabels[ti];
+        const teamStart = ti * flyInStagger;
+        // Each team's influence: ramp up from its start, hold, ramp down when next starts
+        const fadeIn = Math.min(1, Math.max(0, (flyInElapsed - teamStart) / (flyInDuration * 0.5)));
+        const nextStart = (ti + 1) * flyInStagger;
+        const fadeOut = ti < flyInTeamLabels.length - 1
+          ? 1 - Math.min(1, Math.max(0, (flyInElapsed - nextStart) / (flyInDuration * 0.5)))
+          : 1;
+        const weight = fadeIn * fadeOut;
+        shiftX += (label.x - cx) * 0.15 * weight;
+        shiftY += (label.y - cy) * 0.15 * weight;
+      }
+      // Slight zoom in from default
+      const fullZoomX = W / (CFG.WORLD_W + 200);
+      const fullZoomY = H / (CFG.WORLD_H + 200);
+      const baseZoom = Math.min(fullZoomX, fullZoomY);
+      const targetZ = baseZoom * 1.3;
+      const camLerp = 1 - Math.pow(0.015, rawDt);
+      cameraX = lerp(cameraX, cx + shiftX, camLerp);
+      cameraY = lerp(cameraY, cy + shiftY, camLerp);
+      camZoom = lerp(camZoom, targetZ, camLerp);
+    } else if (!finaleMode) {
+      updateCamera(0, rawDt);
+    }
+
     if (countdownTimer <= 0) {
       countdown = false;
       countdownTimer = 0;
-      document.getElementById('countdown-overlay').classList.add('hidden');
+      flyInPhase = false;
+      flyInTeamLabels = [];
+      const _overlay = document.getElementById('countdown-overlay');
+      _overlay.classList.add('hidden');
+      _overlay.style.background = '';
+      // Reset positioned elements
+      const _choose = document.getElementById('cd-choose');
+      const _bets = document.getElementById('cd-bets');
+      _choose.style.position = ''; _choose.style.top = ''; _choose.style.left = ''; _choose.style.transform = ''; _choose.style.display = 'none';
+      _bets.style.position = ''; _bets.style.bottom = ''; _bets.style.left = ''; _bets.style.transform = ''; _bets.style.display = 'none';
+      document.getElementById('cd-fighters').style.display = '';
+      document.getElementById('cd-title').style.display = '';
+      document.getElementById('cd-timer').style.display = '';
+      document.getElementById('cd-big-number').style.display = 'none';
       document.getElementById('match-hud').classList.add('active');
+      buildTeamBanner();
       showScoreboard = true;
     }
     return;
@@ -3840,19 +4003,6 @@ function update(rawDt) {
   gameTime += dt;
 
   if (!skipGameplay) {
-
-  // Team color transition: ships shift to team core color as teammates die
-  if (matchMode === 'teams' && _origTeamSizes.length > 0) {
-    const _aliveCounts = [];
-    for (const s of ships) if (s.alive && s.team > 0) _aliveCounts[s.team] = (_aliveCounts[s.team] || 0) + 1;
-    for (const ship of ships) {
-      if (!ship.alive || ship.team <= 0) continue;
-      const orig = _origTeamSizes[ship.team] || 1;
-      const deadRatio = (orig - (_aliveCounts[ship.team] || 0)) / Math.max(1, orig);
-      const t = Math.min(1, deadRatio / 0.5);
-      ship.color = t > 0.01 ? lerpHexColor(ship.origColor, _teamCoreColors[ship.team - 1], t) : ship.origColor;
-    }
-  }
 
   // Update ships
   for (const ship of ships) {
@@ -3910,11 +4060,12 @@ function update(rawDt) {
     // ── DEBUFF VISUAL EFFECTS ──
     // Incendiary burn: fire particles rising from ship
     if (ship.burnTimer > 0 && Math.random() < 0.5) {
+      const _bc = ship.burnColor || '#ff6600';
       particles.push({
         x: ship.x + rand(-ship.r, ship.r), y: ship.y + rand(-ship.r, ship.r),
         vx: rand(-20, 20), vy: rand(-60, -30),
         life: rand(0.2, 0.4), maxLife: 0.4,
-        color: Math.random() < 0.5 ? '#ff6600' : '#ffaa00', size: rand(2, 4),
+        color: _bc, size: rand(2, 4),
       });
     }
     // Ice Rounds: diamond and snowflake particles emitted from affected ship
@@ -3928,7 +4079,7 @@ function update(rawDt) {
         vx: Math.cos(perp) * side * rand(30, 60) + rand(-10, 10),
         vy: Math.sin(perp) * side * rand(30, 60) + rand(-10, 10) - 15,
         life: 0.4, maxLife: 0.4,
-        color: '#55bbff', size: rand(3, 6),
+        color: ship.iceColor || '#55bbff', size: rand(3, 6),
         isDiamond: iceType === 'diamond', isSnowflake: iceType === 'snowflake',
         spinAng: rand(0, Math.PI * 2),
       });
@@ -3945,7 +4096,7 @@ function update(rawDt) {
         vx: Math.cos(perp) * side * rand(30, 70),
         vy: Math.sin(perp) * side * rand(30, 70),
         life: 0.25, maxLife: 0.25,
-        color: '#ffaa00', size: rand(1.5, 3), isLine: true, lineAng: perp, lineLen: rand(6, 12),
+        color: ship.jamColor || '#ffaa00', size: rand(1.5, 3), isLine: true, lineAng: perp, lineLen: rand(6, 12),
       });
     }
 
@@ -3967,7 +4118,7 @@ function update(rawDt) {
         x: ship.x + Math.cos(a) * d, y: ship.y + Math.sin(a) * d,
         vx: rand(-20, 20), vy: rand(-20, 20),
         life: 0.18, maxLife: 0.18,
-        color: '#ffff44', size: 1.5,
+        color: ship.stunColor || '#ffff44', size: 1.5,
         isArc: true, arcPoints: ap,
       });
     }
@@ -3981,7 +4132,7 @@ function update(rawDt) {
         x: fx + rand(-5, 5), y: fy + rand(-5, 5),
         vx: Math.cos(a) * rand(20, 60), vy: Math.sin(a) * rand(20, 60),
         life: 0.25, maxLife: 0.25,
-        color: '#8844dd', size: rand(2, 4.5),
+        color: ship.overrideColor || '#8844dd', size: rand(2, 4.5),
       });
     }
 
@@ -3992,7 +4143,7 @@ function update(rawDt) {
       shockwaves.push({
         x: fx + rand(-6, 6), y: fy + rand(-6, 6),
         r: 0, maxR: rand(12, 25), life: 0.2, maxLife: 0.2,
-        color: '#ff8800', ellipse: true, ellipseAng: ship.ang + rand(-0.3, 0.3),
+        color: ship.blindColor || '#ff8800', ellipse: true, ellipseAng: ship.ang + rand(-0.3, 0.3),
       });
     }
     ship.fireCooldown = Math.max(0, ship.fireCooldown - dt);
@@ -4417,24 +4568,28 @@ function update(rawDt) {
     const _preTrailCount = particles.length;
     if (b.type === 'flamethrower') {
       // Flamethrower: dense flickering flame particles
-      const age = gameTime - b.spawnTime;
-      const nearShip = age < 0.2;
-      const spawnCount = nearShip ? 1 : 3;
-      const spawnChance = nearShip ? 0.3 : 1;
-      if (Math.random() < spawnChance) {
-        for (let tp = 0; tp < spawnCount; tp++) {
-          const tLife = rand(0.15, 0.35);
-          const fade = Math.max(0.3, 1 - age / (b.life + age));
-          particles.push({
-            x: b.x + rand(-4, 4),
-            y: b.y + rand(-4, 4),
-            vx: b.vx * rand(-0.05, 0.1) + rand(-20, 20),
-            vy: b.vy * rand(-0.05, 0.1) + rand(-20, 20),
-            life: tLife,
-            maxLife: tLife,
-            color: b.color,
-            size: rand(1.5, 4) * fade,
-          });
+      // Skip normal flames if debuff passive — debuff trail replaces them
+      const _hasDebuff = b.ownerPassive && ['iceRounds','jamRounds','stunShock','override','blindRounds'].includes(b.ownerPassive);
+      if (!_hasDebuff) {
+        const age = gameTime - b.spawnTime;
+        const nearShip = age < 0.2;
+        const spawnCount = nearShip ? 1 : 3;
+        const spawnChance = nearShip ? 0.3 : 1;
+        if (Math.random() < spawnChance) {
+          for (let tp = 0; tp < spawnCount; tp++) {
+            const tLife = rand(0.15, 0.35);
+            const fade = Math.max(0.3, 1 - age / (b.life + age));
+            particles.push({
+              x: b.x + rand(-4, 4),
+              y: b.y + rand(-4, 4),
+              vx: b.vx * rand(-0.05, 0.1) + rand(-20, 20),
+              vy: b.vy * rand(-0.05, 0.1) + rand(-20, 20),
+              life: tLife,
+              maxLife: tLife,
+              color: b.color,
+              size: rand(1.5, 4) * fade,
+            });
+          }
         }
       }
     } else if (b.sineAmp && b.type !== 'doublehelix') {
@@ -4624,16 +4779,17 @@ function update(rawDt) {
     }
 
     // Debuff passive aura trails — particles perpendicular to bullet path
-    const debuffColors = {
-      iceRounds: '#55bbff', jamRounds: '#ff4444', stunShock: '#ffff44',
-      override: '#8844dd', blindRounds: '#ff8800',
-    };
-    if (debuffColors[b.ownerPassive]) {
+    const debuffPassives = ['iceRounds', 'jamRounds', 'stunShock', 'override', 'blindRounds'];
+    if (debuffPassives.includes(b.ownerPassive)) {
       const bSpd = Math.hypot(b.vx, b.vy);
+      const isFlame = b.type === 'flamethrower';
       // Faster bullets spawn trails more reliably (lightning at 1600 u/s needs help)
       let spawnChance = Math.min(0.95, 0.5 + bSpd / 3000);
+      if (isFlame) spawnChance = 0.95; // high density to replace normal flame particles
       if (b.ownerPassive === 'stunShock') spawnChance *= 0.5; // half density for stun
+      const spawnCount = isFlame ? 2 : 1;
       if (bSpd > 10 && Math.random() < spawnChance) {
+       for (let _sc = 0; _sc < spawnCount; _sc++) {
         const perpAng = Math.atan2(b.vy, b.vx) + Math.PI * 0.5;
         const side = Math.random() < 0.5 ? 1 : -1;
         if (b.ownerPassive === 'stunShock') {
@@ -4652,11 +4808,12 @@ function update(rawDt) {
           particles.push({
             x: b.x, y: b.y, vx: b.vx * 0.1, vy: b.vy * 0.1,
             life: rand(0.12, 0.22), maxLife: 0.22,
-            color: '#ffff44', size: 1.5,
+            color: b.color, size: 1.5,
             isArc: true, arcPoints,
           });
         } else if (b.ownerPassive === 'iceRounds') {
           // Ice crystals: diamonds and snowflakes
+          if (isFlame && Math.random() < 0.6) continue; // cut 60% for dragonfire perf
           const spread = rand(6, 16);
           const px = b.x + Math.cos(perpAng) * spread * side;
           const py = b.y + Math.sin(perpAng) * spread * side;
@@ -4667,7 +4824,7 @@ function update(rawDt) {
             vx: Math.cos(perpAng) * driftSpd * side + b.vx * 0.05,
             vy: Math.sin(perpAng) * driftSpd * side + b.vy * 0.05,
             life: rand(0.2, 0.4), maxLife: 0.4,
-            color: '#55bbff', size: rand(2, 4.5),
+            color: b.color, size: rand(2, 4.5),
             isDiamond: iceType === 'diamond', isSnowflake: iceType === 'snowflake',
             spinAng: rand(0, Math.PI * 2),
           });
@@ -4681,10 +4838,11 @@ function update(rawDt) {
             vx: Math.cos(perpAng) * driftSpd * side + b.vx * 0.1,
             vy: Math.sin(perpAng) * driftSpd * side + b.vy * 0.1,
             life: rand(0.12, 0.25), maxLife: 0.25,
-            color: debuffColors[b.ownerPassive],
+            color: b.color,
             size: rand(1, 2.5),
           });
         }
+       } // end spawnCount loop
       }
     }
 
@@ -4797,8 +4955,7 @@ function update(rawDt) {
     // Bullet vs ship
     for (const ship of ships) {
       if (!ship.alive || ship.id === b.owner || ship.invuln > 0) continue;
-      // Friendly fire disabled for first 10 seconds - bullets pass through teammates
-      if (b.ownerTeam > 0 && ship.team === b.ownerTeam && gameTime < 10) continue;
+      const isFriendly = b.ownerTeam > 0 && ship.team === b.ownerTeam;
       const bDist = dist(b, ship);
 
       // Swept collision for fast bullets (gatling etc): check line segment from prev to current pos
@@ -4824,14 +4981,14 @@ function update(rawDt) {
         }
       }
 
-      // Near-miss debuff detection: 2x hit radius applies effect only (no damage)
+      // Near-miss debuff detection: 2x hit radius applies effect only (no damage) — skip teammates
       const attacker = shipById[b.owner];
-      if (attacker && bDist < hitR * 2 && bDist >= hitR) {
-        if (attacker.passive === 'blindRounds') ship.blindTimer = 3;
-        if (attacker.passive === 'iceRounds') { ship.iceSlow = 2; ship.iceDotTimer = 2.0; }
-        if (attacker.passive === 'jamRounds') ship.jamSlow = 4;
-        if (attacker.passive === 'stunShock') ship.stunTimer = 1.75;
-        if (attacker.passive === 'override') { ship.overrideTimer = 2; ship.overrideTurnDir = Math.random() < 0.5 ? -1 : 1; }
+      if (attacker && !isFriendly && bDist < hitR * 2 && bDist >= hitR) {
+        if (attacker.passive === 'blindRounds') { ship.blindTimer = 3; ship.blindColor = attacker.color; }
+        if (attacker.passive === 'iceRounds') { ship.iceSlow = 2; ship.iceDotTimer = 2.0; ship.iceColor = attacker.color; }
+        if (attacker.passive === 'jamRounds') { ship.jamSlow = 4; ship.jamColor = attacker.color; }
+        if (attacker.passive === 'stunShock') { ship.stunTimer = 1.75; ship.stunColor = attacker.color; }
+        if (attacker.passive === 'override') { ship.overrideTimer = 2; ship.overrideTurnDir = Math.random() < 0.5 ? -1 : 1; ship.overrideColor = attacker.color; }
         if (['blindRounds','iceRounds','jamRounds','stunShock','override'].includes(attacker.passive)) playDebuff();
       }
 
@@ -4870,17 +5027,20 @@ function update(rawDt) {
               bulletDmg = Math.max(0.5, bulletDmg); // floor at 0.5
             }
           }
-          const dmg = bulletDmg * (ship.passive === 'titanium' ? 0.75 : 1);
+          const dmg = bulletDmg * (ship.passive === 'titanium' ? 0.75 : 1) * (isFriendly ? getFriendlyDamageMult() : 1);
           // Incendiary: 50% instant, 50% as burn DoT over 2s
           if (b.ownerPassive === 'incendiary') {
             ship.hp -= dmg * 0.5;
             ship.burnTimer = 2.0;
             ship.burnDps = (dmg * 0.5) / 2.0; // remaining 50% over 2s
+            ship.burnColor = b.color;
           } else {
             ship.hp -= dmg;
           }
-          ship.lastAttacker = b.owner;
-          ship.lastAttackerTime = gameTime;
+          if (!isFriendly || dmg > 0) {
+            ship.lastAttacker = b.owner;
+            ship.lastAttackerTime = gameTime;
+          }
           ship.hpBarTimer = 0.75;
           const explodeSize = Math.min(12, 4 + dmg * 2);
           spawnExplosion(b.x, b.y, ship.color, explodeSize, 60 + dmg * 10);
@@ -4907,14 +5067,14 @@ function update(rawDt) {
             ship.overrideTimer = 0; ship.blindTimer = 0;
             ship.burnTimer = 0; ship.burnDps = 0; ship.iceDotTimer = 0;
           }
-          // Ice/Jam rounds: apply debuff based on attacker's passive
+          // Ice/Jam rounds: apply debuff based on attacker's passive — skip teammates
           const attacker = shipById[b.owner];
-          if (attacker) {
-            if (attacker.passive === 'iceRounds') { ship.iceSlow = 2; ship.iceDotTimer = 2.0; }
-            if (attacker.passive === 'jamRounds') ship.jamSlow = 4;
-            if (attacker.passive === 'stunShock') ship.stunTimer = 1.75;
-            if (attacker.passive === 'override') { ship.overrideTimer = 2; ship.overrideTurnDir = Math.random() < 0.5 ? -1 : 1; }
-            if (attacker.passive === 'blindRounds') ship.blindTimer = 3;
+          if (attacker && !isFriendly) {
+            if (attacker.passive === 'iceRounds') { ship.iceSlow = 2; ship.iceDotTimer = 2.0; ship.iceColor = attacker.color; }
+            if (attacker.passive === 'jamRounds') { ship.jamSlow = 4; ship.jamColor = attacker.color; }
+            if (attacker.passive === 'stunShock') { ship.stunTimer = 1.75; ship.stunColor = attacker.color; }
+            if (attacker.passive === 'override') { ship.overrideTimer = 2; ship.overrideTurnDir = Math.random() < 0.5 ? -1 : 1; ship.overrideColor = attacker.color; }
+            if (attacker.passive === 'blindRounds') { ship.blindTimer = 3; ship.blindColor = attacker.color; }
             if (['blindRounds','iceRounds','jamRounds','stunShock','override','incendiary'].includes(attacker.passive)) playDebuff();
           }
           if (ship.hp <= 0) {
@@ -4960,7 +5120,7 @@ function update(rawDt) {
       if (dist(ship, ast) < ship.r + ast.r * 0.85) {
         // Drillbore passive: smash through asteroids but take chip damage
         if (ship.passive === 'drillbore') {
-          const chipDmg = 0.4;
+          const chipDmg = 0.2;
           ship.hp -= chipDmg;
           ship.hpBarTimer = 0.75;
           spawnExplosion(ast.x, ast.y, ship.color, 12, 80);
@@ -5002,16 +5162,60 @@ function update(rawDt) {
     }
   }
 
-  // Ship vs ship collision — both die
+  // Ship vs ship collision
   for (let i = 0; i < ships.length; i++) {
     const a = ships[i];
     if (!a.alive || a._teleportPhase === 'phasing') continue;
     for (let j = i + 1; j < ships.length; j++) {
       const b = ships[j];
       if (!b.alive || b._teleportPhase === 'phasing') continue;
-      // Skip teammate collisions for first 10 seconds
-      if (a.team > 0 && a.team === b.team && gameTime < 10) continue;
       if (dist(a, b) < a.r + b.r) {
+        // Teammates bounce off each other instead of dying
+        if (a.team > 0 && a.team === b.team) {
+          // Prevent re-bouncing every frame
+          const bounceKey = Math.min(a.id, b.id) + '_' + Math.max(a.id, b.id);
+          if (!a._lastFriendlyBounce) a._lastFriendlyBounce = {};
+          if (a._lastFriendlyBounce[bounceKey] && gameTime - a._lastFriendlyBounce[bounceKey] < 0.3) continue;
+          a._lastFriendlyBounce[bounceKey] = gameTime;
+
+          // Bounce physics
+          const nx = b.x - a.x, ny = b.y - a.y;
+          const nd = Math.sqrt(nx * nx + ny * ny) || 1;
+          const ux = nx / nd, uy = ny / nd;
+          // Separate them
+          const overlap = (a.r + b.r) - nd;
+          a.x -= ux * overlap * 0.5;
+          a.y -= uy * overlap * 0.5;
+          b.x += ux * overlap * 0.5;
+          b.y += uy * overlap * 0.5;
+          // Reflect velocities along collision normal
+          const relV = (a.vx - b.vx) * ux + (a.vy - b.vy) * uy;
+          if (relV > 0) {
+            a.vx -= relV * ux;
+            a.vy -= relV * uy;
+            b.vx += relV * ux;
+            b.vy += relV * uy;
+          }
+          // Apply 3 damage scaled by grace period
+          const ffMult = getFriendlyDamageMult();
+          const bumpDmg = 3 * ffMult;
+          if (bumpDmg > 0) {
+            a.hp -= bumpDmg * (a.passive === 'titanium' ? 0.75 : 1);
+            b.hp -= bumpDmg * (b.passive === 'titanium' ? 0.75 : 1);
+            a.hpBarTimer = 0.5;
+            b.hpBarTimer = 0.5;
+            if (a.hp <= 0) killShip(a, b.id);
+            if (b.hp <= 0) killShip(b, a.id);
+          }
+          // Small bump particles
+          const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+          for (let k = 0; k < 6; k++) {
+            const pa = rand(0, Math.PI * 2), sp = rand(20, 80);
+            particles.push({ x:mx, y:my, vx:Math.cos(pa)*sp, vy:Math.sin(pa)*sp, life:rand(0.15,0.4), maxLife:0.4, color:'#fff', size:rand(0.8,2) });
+          }
+          playShipHit();
+          continue;
+        }
         const mx = (a.x + b.x) / 2;
         const my = (a.y + b.y) / 2;
         // White particles at midpoint, no shockwave
@@ -5080,10 +5284,10 @@ function update(rawDt) {
             spawnExplosion(p.x, p.y, '#f80', 4, 30);
             const attacker = shipById[p.incOwner];
             if (attacker) {
-              if (attacker.passive === 'iceRounds') { ship.iceSlow = 2; ship.iceDotTimer = 2.0; }
-              if (attacker.passive === 'jamRounds') ship.jamSlow = 4;
-              if (attacker.passive === 'stunShock') ship.stunTimer = 1.75;
-              if (attacker.passive === 'override') { ship.overrideTimer = 2; ship.overrideTurnDir = Math.random() < 0.5 ? -1 : 1; }
+              if (attacker.passive === 'iceRounds') { ship.iceSlow = 2; ship.iceDotTimer = 2.0; ship.iceColor = attacker.color; }
+              if (attacker.passive === 'jamRounds') { ship.jamSlow = 4; ship.jamColor = attacker.color; }
+              if (attacker.passive === 'stunShock') { ship.stunTimer = 1.75; ship.stunColor = attacker.color; }
+              if (attacker.passive === 'override') { ship.overrideTimer = 2; ship.overrideTurnDir = Math.random() < 0.5 ? -1 : 1; ship.overrideColor = attacker.color; }
             }
             if (ship.passive === 'hitInvuln' && ship.hp > 0 && ship.hitInvulnCooldown <= 0) {
               ship.invuln = 1; ship.hitInvulnCooldown = 8;
@@ -5391,6 +5595,7 @@ function update(rawDt) {
             d.state = 'pursuing';
             d._drawScale = 1;
             d.life = 2.0; // reset lifetime so drones don't all expire at once
+            playShootRise();
             const tAng = angle(d, closest);
             d.vx = Math.cos(tAng) * d.speed;
             d.vy = Math.sin(tAng) * d.speed;
@@ -5424,6 +5629,7 @@ function update(rawDt) {
       for (let j = bullets.length - 1; j >= 0; j--) {
         const b = bullets[j];
         if (b.owner === d.ownerId) continue;
+        if (d.ownerTeam > 0 && b.ownerTeam === d.ownerTeam) continue;
         if (dist(d, b) < d.r + 4) {
           spawnExplosion(b.x, b.y, '#fff', 4, 20);
           bullets.splice(j, 1);
@@ -5440,6 +5646,7 @@ function update(rawDt) {
       let closest = null, cDist = Infinity;
       for (const s of ships) {
         if (!s.alive || s.id === d.ownerId) continue;
+        if (d.ownerTeam > 0 && s.team === d.ownerTeam) continue;
         const dd = dist(d, s);
         if (dd < cDist) { cDist = dd; closest = s; }
       }
@@ -5652,9 +5859,7 @@ function update(rawDt) {
   }
 
   // Update HUD
-  updateHUD();
 }
-
 // ─── KILL SHIP (Versus mode) ─────────────────────────────────
 function killShip(ship, killerId) {
   ship.alive = false;
@@ -5826,34 +6031,56 @@ function updateCamera(dt, rawDt) {
 }
 
 // ─── HUD ─────────────────────────────────────────────────────
-function updateHUD() {} // HUD disabled
+let _bannerBuilt = false;
+let _bannerShipEls = {}; // shipId → DOM element
 
-function makeHudShipEl(ship) {
-  const el = document.createElement('div');
-  el.className = 'hud-ship' + (ship.alive ? '' : ' dead');
-  el.style.borderColor = ship.color + '55';
-  el.appendChild(createShipIcon(ship.typeId, ship.color, 16));
-  const name = document.createElement('span');
-  name.className = 'hs-name';
-  name.style.color = ship.color;
-  name.textContent = ship.name;
-  el.appendChild(name);
-  if (ship.maxHp > 1) {
-    const bar = document.createElement('div');
-    bar.className = 'hs-hp-bar';
-    const fill = document.createElement('div');
-    fill.className = 'hs-hp-fill';
-    fill.style.width = Math.max(0, (ship.hp / ship.maxHp) * 100) + '%';
-    fill.style.background = ship.hp / ship.maxHp > 0.5 ? ship.color : ship.hp / ship.maxHp > 0.25 ? '#ffaa22' : '#ff4444';
-    bar.appendChild(fill);
-    el.appendChild(bar);
+function buildTeamBanner() {
+  const banner = document.getElementById('team-banner');
+  banner.innerHTML = '';
+  _bannerShipEls = {};
+  if (matchMode !== 'teams') { _bannerBuilt = false; return; }
+  const _tcArr = getTeamColors();
+  const numTeams = teams.length;
+  for (let t = 0; t < numTeams; t++) {
+    if (t > 0) {
+      const vs = document.createElement('div');
+      vs.className = 'tb-vs';
+      vs.textContent = 'VS';
+      banner.appendChild(vs);
+    }
+    const teamDiv = document.createElement('div');
+    teamDiv.className = 'tb-team';
+    const nameEl = document.createElement('div');
+    nameEl.className = 'tb-name';
+    nameEl.style.color = _tcArr[t];
+    nameEl.style.textShadow = `0 0 8px ${_tcArr[t]}44`;
+    nameEl.textContent = teamNames[t];
+    teamDiv.appendChild(nameEl);
+    const shipsRow = document.createElement('div');
+    shipsRow.className = 'tb-ships';
+    const teamShips = ships.filter(s => s.team === t + 1);
+    for (const s of teamShips) {
+      const icon = createShipIcon(s.designId != null ? s.designId : s.typeId, s.origColor || s.color, 18, true);
+      icon.className = 'tb-ship';
+      icon.dataset.shipId = s.id;
+      _bannerShipEls[s.id] = icon;
+      shipsRow.appendChild(icon);
+    }
+    teamDiv.appendChild(shipsRow);
+    banner.appendChild(teamDiv);
   }
-  const kills = document.createElement('span');
-  kills.className = 'hs-kills';
-  kills.style.color = ship.color;
-  kills.textContent = ship.kills || '';
-  el.appendChild(kills);
-  return el;
+  _bannerBuilt = true;
+}
+
+function updateTeamBanner() {
+  if (!_bannerBuilt || matchMode !== 'teams') return;
+  for (const ship of ships) {
+    const el = _bannerShipEls[ship.id];
+    if (!el) continue;
+    if (!ship.alive && !el.classList.contains('dead')) {
+      el.classList.add('dead');
+    }
+  }
 }
 function render() {
   ctx.fillStyle = '#000';
@@ -5868,7 +6095,7 @@ function render() {
   // Scale glow inversely with zoom — 1x at close, ~2x when zoomed out
   const baseGlowScale = Math.min(8, 0.35 / camZoom);
   // Countdown glow boost: 2× at start, decaying to 1× by end
-  const countdownGlowMult = countdown ? 1 + (countdownTimer / COUNTDOWN_DURATION) : 1;
+  const countdownGlowMult = countdown ? 1 + (Math.min(countdownTimer, COUNTDOWN_DURATION) / COUNTDOWN_DURATION) : 1;
   const glowScale = baseGlowScale * countdownGlowMult;
 
   // Stars (parallax)
@@ -6291,8 +6518,11 @@ function render() {
       ctx.restore();
     }
 
+    // Fly-in fade alpha
+    const _shipAlpha = ship._flyAlpha != null ? ship._flyAlpha : 1;
+
     // Zoom-dependent glow ring — visible at distance, fades when close
-    const zoomRingAlpha = Math.max(0, Math.min(0.35, (0.5 - camZoom) * 1));
+    const zoomRingAlpha = Math.max(0, Math.min(0.35, (0.5 - camZoom) * 1)) * _shipAlpha;
     if (zoomRingAlpha > 0.01) {
       const ringR = ship.r * 6;
       const hc = ship.color;
@@ -6307,7 +6537,9 @@ function render() {
       ctx.fill();
     }
 
-    drawShipShape(ctx, ship.x, ship.y, ship.ang, ship.r, ship.color, ship.hp, ship.maxHp, ship.invuln, ship.typeId, ship.hpBarTimer);
+    if (_shipAlpha < 1) ctx.globalAlpha = _shipAlpha;
+    drawShipShape(ctx, ship.x, ship.y, ship.ang, ship.r, ship.color, ship.hp, ship.maxHp, ship.invuln, ship.designId != null ? ship.designId : ship.typeId, ship.hpBarTimer);
+    if (_shipAlpha < 1) ctx.globalAlpha = 1;
 
     // ── PASSIVE VISUAL OVERLAYS ──
     ctx.save();
@@ -6466,10 +6698,36 @@ function render() {
       ctx.moveTo(p.x, p.y - s); ctx.lineTo(p.x, p.y + s);
       ctx.stroke();
     } else {
+      if (matchMode === 'teams') {
+        ctx.shadowColor = p.color;
+        ctx.shadowBlur = 6 * glowScale;
+      }
       ctx.fillRect(p.x - p.size/2, p.y - p.size/2, p.size, p.size);
+      if (matchMode === 'teams') {
+        ctx.fillRect(p.x - p.size/2, p.y - p.size/2, p.size, p.size);
+        ctx.shadowBlur = 0;
+      }
     }
   }
   ctx.globalAlpha = 1;
+
+  // Fly-in team name labels (world space)
+  if (flyInTeamLabels.length > 0) {
+    for (const label of flyInTeamLabels) {
+      if (label.alpha <= 0) continue;
+      ctx.save();
+      ctx.globalAlpha = label.alpha;
+      ctx.font = `900 ${Math.round(28 / camZoom)}px Orbitron, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.shadowColor = label.color;
+      ctx.shadowBlur = 20 / camZoom;
+      ctx.fillStyle = label.color;
+      ctx.fillText(label.name, label.x, label.y);
+      ctx.fillText(label.name, label.x, label.y);
+      ctx.restore();
+    }
+  }
 
   ctx.restore();
 
@@ -6651,67 +6909,157 @@ function buildCountdownRoster() {
 
   if (matchMode === 'ffa') {
     titleEl.textContent = 'FREE FOR ALL';
-    chooseEl.style.display = 'none';
+    titleEl.style.display = '';
+    titleEl.style.fontSize = 'clamp(14px, 3vw, 20px)';
+    titleEl.style.color = 'rgba(255,255,255,0.4)';
+    titleEl.style.letterSpacing = '8px';
+    chooseEl.style.display = 'block';
+    chooseEl.textContent = 'PLACE YOUR BETS!';
+    chooseEl.style.position = ''; chooseEl.style.top = ''; chooseEl.style.left = ''; chooseEl.style.transform = '';
     betsEl.style.display = 'none';
+    betsEl.style.position = ''; betsEl.style.bottom = ''; betsEl.style.left = ''; betsEl.style.transform = '';
     const grid = document.createElement('div');
-    grid.style.cssText = 'display:flex; flex-wrap:wrap; justify-content:center; gap:8px; padding:8px 0;';
+    grid.style.cssText = 'display:flex; flex-wrap:wrap; justify-content:center; gap:12px; padding:12px 0;';
     for (let si = 0; si < ships.length; si++) {
       const ship = ships[si];
-      const ic = createShipIcon(ship.typeId, ship.color, 36);
+      const ic = createShipIcon(ship.designId != null ? ship.designId : ship.typeId, ship.color, 48, true);
       ic.style.animation = 'cdSlideIn 0.4s ease-out backwards';
       ic.style.animationDelay = `${si * 0.05}s`;
       grid.appendChild(ic);
     }
     container.appendChild(grid);
   } else {
+    titleEl.style.fontSize = '';
+    titleEl.style.color = '';
+    titleEl.style.letterSpacing = '';
     chooseEl.style.display = 'block';
+    chooseEl.textContent = 'CHOOSE YOUR TEAM!';
     betsEl.style.display = 'block';
     const _tcArr = getTeamColors();
-    const parts = teams.map((_, t) => `<span style="color:${_tcArr[t]}">${teamNames[t]}</span>`);
-    titleEl.innerHTML = parts.join(' <span style="color:rgba(255,255,255,0.4)">vs</span> ');
+    titleEl.style.display = 'none';
+    const nTeams = teams.length;
+    const compact = nTeams >= 5;
+    const vsFont = compact ? 'clamp(12px,3vw,20px)' : 'clamp(18px,5vw,36px)';
+    const vsMargin = compact ? '8px 0' : '18px 0';
+    const nameFont = compact ? 'clamp(14px,4vw,24px)' : 'clamp(22px,6vw,40px)';
+    const nameMargin = compact ? '2px 0 4px 0' : '4px 0 8px 0';
+    const iconSize = compact ? 30 : 44;
+    const iconGap = compact ? '4px' : '8px';
     let delay = 0;
     for (let t = 0; t < teams.length; t++) {
       if (t > 0) {
         const vs = document.createElement('div');
-        vs.style.cssText = 'text-align:center; font-family:Orbitron,sans-serif; font-size:clamp(12px,3.5vw,24px); font-weight:900; letter-spacing:4px; color:rgba(255,255,255,0.5); margin:6px 0;';
+        vs.style.cssText = `text-align:center; font-family:Orbitron,sans-serif; font-size:${vsFont}; font-weight:900; letter-spacing:8px; color:rgba(255,255,255,0.5); margin:${vsMargin};`;
         vs.textContent = 'VS';
         container.appendChild(vs);
       }
       // Team name label
       const label = document.createElement('div');
-      label.style.cssText = `text-align:center; font-family:Orbitron,sans-serif; font-size:clamp(11px,3vw,18px); font-weight:700; letter-spacing:3px; color:${_tcArr[t] || '#fff'}; margin:4px 0 2px 0;`;
+      label.style.cssText = `text-align:center; font-family:Orbitron,sans-serif; font-size:${nameFont}; font-weight:700; letter-spacing:5px; color:${_tcArr[t] || '#fff'}; margin:${nameMargin}; text-shadow: 0 0 20px currentColor;`;
       label.textContent = teamNames[t];
       container.appendChild(label);
       // Horizontal icon grid
       const grid = document.createElement('div');
-      grid.style.cssText = 'display:flex; flex-wrap:wrap; justify-content:center; gap:6px; padding:2px 0;';
+      grid.style.cssText = `display:flex; flex-wrap:wrap; justify-content:center; gap:${iconGap}; padding:${compact ? '2px' : '4px'} 0;`;
       const teamShips = ships.filter(s => s.team === t + 1);
       for (let si = 0; si < teamShips.length; si++) {
         const ship = teamShips[si];
-        const ic = createShipIcon(ship.typeId, ship.color, 32);
+        const ic = createShipIcon(ship.designId != null ? ship.designId : ship.typeId, ship.color, iconSize, true);
         ic.style.animation = 'cdSlideIn 0.4s ease-out backwards';
         ic.style.animationDelay = `${delay++ * 0.04}s`;
         grid.appendChild(ic);
       }
       container.appendChild(grid);
     }
-  }
+    if (compact) container.style.gap = '6px';
+  } // end else (teams)
 
   // Scale to fit without scrollbar
   requestAnimationFrame(() => {
     const overlay = document.getElementById('countdown-overlay');
-    const avail = overlay.clientHeight * 0.82; // leave room for title + timer
+    const avail = overlay.clientHeight * 0.75;
     const natural = container.scrollHeight;
     if (natural > avail && natural > 0) {
-      const scale = Math.max(0.35, avail / natural);
+      const scale = Math.max(0.25, avail / natural);
       container.style.transform = `scale(${scale})`;
-      container.style.transformOrigin = 'top center';
-      container.style.height = `${avail}px`;
+      container.style.transformOrigin = 'center center';
+      // Set height to scaled size so flexbox sees the correct space
+      container.style.height = `${natural * scale}px`;
+      container.style.flexShrink = '0';
     } else {
       container.style.transform = '';
       container.style.height = '';
+      container.style.flexShrink = '';
     }
   });
+}
+
+function setupFlyIn() {
+  flyInPhase = true;
+  flyInElapsed = 0;
+  flyInTeamLabels = [];
+  const cx = CFG.WORLD_W / 2, cy = CFG.WORLD_H / 2;
+  const numTeams = teams.length;
+  const _tcArr = getTeamColors();
+
+  // Scale timing for larger team counts
+  if (numTeams <= 3) { flyInDuration = 1.2; flyInStagger = 1.0; }
+  else if (numTeams <= 5) { flyInDuration = 1.0; flyInStagger = 0.7; }
+  else { flyInDuration = 0.8; flyInStagger = 0.5; }
+
+  for (let t = 0; t < numTeams; t++) {
+    const teamShips = ships.filter(s => s.team === t + 1);
+    if (teamShips.length === 0) continue;
+    let avgX = 0, avgY = 0;
+    for (const s of teamShips) { avgX += s.x; avgY += s.y; }
+    avgX /= teamShips.length; avgY /= teamShips.length;
+
+    const dx = avgX - cx, dy = avgY - cy;
+    const d = Math.max(1, Math.hypot(dx, dy));
+    const nx = dx / d, ny = dy / d;
+    const flyDist = 400;
+
+    for (const s of teamShips) {
+      s._flyTargetX = s.x; s._flyTargetY = s.y;
+      s._flyStartX = s.x + nx * flyDist; s._flyStartY = s.y + ny * flyDist;
+      s._flyTeamIdx = t;
+      s.x = s._flyStartX; s.y = s._flyStartY;
+    }
+
+    let maxY = -Infinity;
+    for (const s of teamShips) maxY = Math.max(maxY, s._flyTargetY);
+    flyInTeamLabels.push({
+      x: avgX, y: maxY + 100,
+      name: teamNames[t], color: _tcArr[t], alpha: 0, arrived: false
+    });
+  }
+
+  const totalFlyIn = (numTeams - 1) * flyInStagger + flyInDuration + 0.5;
+  countdownTimer = totalFlyIn + COUNTDOWN_DURATION;
+
+  const overlay = document.getElementById('countdown-overlay');
+  overlay.classList.remove('hidden');
+  overlay.style.background = 'rgba(0,0,0,0.15)';
+
+  // For teams: skip roster, show minimal fly-in UI
+  const chooseEl = document.getElementById('cd-choose');
+  const betsEl = document.getElementById('cd-bets');
+  chooseEl.style.display = 'block';
+  chooseEl.textContent = 'PLACE YOUR BETS!';
+  chooseEl.style.position = 'absolute';
+  chooseEl.style.top = '3%';
+  chooseEl.style.left = '50%';
+  chooseEl.style.transform = 'translateX(-50%)';
+  betsEl.style.display = 'block';
+  betsEl.textContent = 'CHOOSE YOUR TEAM!';
+  betsEl.style.position = 'absolute';
+  betsEl.style.bottom = '3%';
+  betsEl.style.left = '50%';
+  betsEl.style.transform = 'translateX(-50%)';
+  document.getElementById('cd-fighters').style.display = 'none';
+  document.getElementById('cd-title').style.display = 'none';
+  document.getElementById('cd-timer').style.display = 'none';
+  document.getElementById('cd-big-number').style.display = 'none';
 }
 
 function launchMatch() {
@@ -6720,9 +7068,15 @@ function launchMatch() {
   pregame = false;
   document.getElementById('setup-screen').classList.add('hidden');
   countdown = true;
-  countdownTimer = COUNTDOWN_DURATION;
-  buildCountdownRoster();
-  document.getElementById('countdown-overlay').classList.remove('hidden');
+
+  if (matchMode === 'teams') {
+    setupFlyIn();
+  } else {
+    flyInPhase = false;
+    countdownTimer = COUNTDOWN_DURATION;
+    buildCountdownRoster();
+    document.getElementById('countdown-overlay').classList.remove('hidden');
+  }
 }
 
 function showWinner() {
@@ -6827,7 +7181,7 @@ function showWinner() {
       const icons = document.createElement('div');
       icons.style.cssText = 'display:flex; flex-wrap:wrap; justify-content:center; gap:6px; padding:4px 0;';
       for (const ship of ts.teamShips) {
-        const ic = createShipIcon(ship.typeId, ship.color, 37);
+        const ic = createShipIcon(ship.designId != null ? ship.designId : ship.typeId, ship.color, 37, true);
         if (!ship.alive) ic.style.opacity = '0.3';
         icons.appendChild(ic);
       }
@@ -6853,7 +7207,7 @@ function showWinner() {
       rank.textContent = i + 1;
       card.appendChild(rank);
 
-      card.appendChild(createShipIcon(ship.typeId, ship.color, 48));
+      card.appendChild(createShipIcon(ship.designId != null ? ship.designId : ship.typeId, ship.color, 48, true));
 
       const info = document.createElement('div');
       info.className = 'rc-info';
@@ -6916,15 +7270,31 @@ function rematch() {
   init();
   pregame = false;
   countdown = true;
-  countdownTimer = COUNTDOWN_DURATION;
-  buildCountdownRoster();
-  document.getElementById('countdown-overlay').classList.remove('hidden');
+
+  if (matchMode === 'teams') {
+    setupFlyIn();
+  } else {
+    flyInPhase = false;
+    countdownTimer = COUNTDOWN_DURATION;
+    buildCountdownRoster();
+    document.getElementById('countdown-overlay').classList.remove('hidden');
+  }
 }
 
 function newSetup() {
   document.getElementById('winner-overlay').classList.remove('show');
   document.getElementById('match-hud').classList.remove('active');
   document.getElementById('killfeed').innerHTML = '';
+  document.getElementById('countdown-overlay').style.background = '';
+  const _ch = document.getElementById('cd-choose'), _bt = document.getElementById('cd-bets');
+  _ch.style.position = ''; _ch.style.top = ''; _ch.style.left = ''; _ch.style.transform = ''; _ch.style.display = 'none';
+  _bt.style.position = ''; _bt.style.bottom = ''; _bt.style.left = ''; _bt.style.transform = ''; _bt.style.display = 'none';
+  document.getElementById('cd-fighters').style.display = '';
+  document.getElementById('cd-title').style.display = '';
+  document.getElementById('cd-timer').style.display = '';
+  document.getElementById('cd-big-number').style.display = 'none';
+  flyInPhase = false;
+  flyInTeamLabels = [];
   pregame = true;
   gameOver = false;
   teams = [[], []];
@@ -6932,6 +7302,7 @@ function newSetup() {
   teamWeapons = [[], []];
   teamPassives = [[], []];
   teamManeuvers = [[], []];
+  teamShipDesigns = [[], []];
   selectedShips = [];
   document.getElementById('setup-screen').classList.remove('hidden');
   renderSetup();
@@ -6944,6 +7315,7 @@ function gameLoop(time) {
   lastTime = time;
   update(rawDt);
   render();
+  updateTeamBanner();
   requestAnimationFrame(gameLoop);
 }
 
@@ -6953,11 +7325,6 @@ buildHPRow();
 // Auto-fill for quick start
 autoFill();
 requestAnimationFrame(gameLoop);
-
-// ─── REGISTER SERVICE WORKER ──────────────────────────────────
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js').catch(() => {});
-}
 
 </script>
 </body>
